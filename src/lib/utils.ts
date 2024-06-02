@@ -1,4 +1,5 @@
-export const calculateBirthday = (birthdayTimestamp: string) => {
+export const calculateBirthday = (birthdayTimestamp?: string) => {
+  if (!birthdayTimestamp) return;
 
   const options: Intl.DateTimeFormatOptions = {
     day: 'numeric',
@@ -9,3 +10,4 @@ export const calculateBirthday = (birthdayTimestamp: string) => {
   const dateStringParsing = new Date(birthdayTimestamp);
   return new Intl.DateTimeFormat('en-US', options).format(dateStringParsing);
 };
+

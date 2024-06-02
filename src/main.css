@@ -3,3 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.u-wrapper-100 {
+  height: 100dvh;
+}
