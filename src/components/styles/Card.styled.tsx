@@ -10,3 +10,8 @@ export const StyledImageContainer = styled.div`
   width: 192px;
   height: 192px;
 `;
+
+export const StyledMutationButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+`;

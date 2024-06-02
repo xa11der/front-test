@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ExtendedPlayer, arrayOfPlayersSchema } from '../types.type';
 
-export const useFetchCollection = (url: string) => {
+export const useFetchCollection = (url: string, revalidateCollection: boolean) => {
   const [collectionData, setCollectionData] = useState<ExtendedPlayer[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -23,7 +23,7 @@ export const useFetchCollection = (url: string) => {
       }
       setIsLoading(false);
     })();
-  }, [url]);
+  }, [url, revalidateCollection]);
 
   return { collectionData, isLoading, errorMessage };
 };

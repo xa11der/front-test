@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '../components/Card';
 import NotificationWrapper from '../components/ui/NotificationWrapper';
 import Notification from '../components/ui/Notification';
@@ -8,8 +8,10 @@ import { useFetchCollection } from '../lib/hooks/useFetchCollection';
 import { useSortCollection } from '../lib/hooks/useSortCollection';
 import { calculateBirthday } from '../lib/utils';
 
-export const Collection: React.FC = () => {
-  const { collectionData, isLoading, errorMessage } = useFetchCollection(`${process.env.REACT_APP_API}/cards`);
+const Collection: React.FC = () => {
+  const [revalidateCollection, setRevalidateCollection] = useState(false);
+  const { collectionData, isLoading, errorMessage } = useFetchCollection(`${process.env.REACT_APP_API}/cards`, revalidateCollection);
+
   const { sortedCollection } = useSortCollection({
     collectionData: collectionData,
   });
@@ -46,6 +48,8 @@ export const Collection: React.FC = () => {
             firstname={card.player.firstname}
             lastname={card.player.lastname}
             image={`${process.env.REACT_APP_IMAGE_RESOURCES}/image_resources/playerimages/${card?.id}.png`}
+            id={card.id}
+            setRevalidateCollection={setRevalidateCollection}
           />
         ))}
       </StyledCollectionGrid>
@@ -53,3 +57,4 @@ export const Collection: React.FC = () => {
   );
 };
 
+export default Collection;
