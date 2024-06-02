@@ -12,6 +12,11 @@ export const extendedPlayerSchema = z.object({
   player: playerSchema,
 });
 
+export const playerWithIdSchema = z.object({
+  id: z.number(),
+  ...playerSchema.shape,
+});
+
 export const arrayOfPlayersSchema = z.array(extendedPlayerSchema);
 
 export const searchParamSchema = z.object({
@@ -19,7 +24,17 @@ export const searchParamSchema = z.object({
   direction: z.enum(['asc', 'desc']),
 });
 
+export const pathParamSchema = z.object({
+  id: z.coerce.number(),
+});
+
 export type PlayerType = z.infer<typeof playerSchema>;
 
 export type ExtendedPlayer = z.infer<typeof extendedPlayerSchema>;
+
+export type PlayerWithId = z.infer<typeof playerWithIdSchema>;
+
+export type IdPathParam = {
+  id: string;
+};
 
