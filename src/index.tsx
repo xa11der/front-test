@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { Collection } from './pages/Collection';
 import { CreateCard } from './pages/CreateCard';
+import './main.css';
 
 const App = () => (
   <Router>
@@ -15,3 +16,4 @@ const App = () => (
 );
 
 render(<App />, document.getElementById('root'));
+
