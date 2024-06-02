@@ -14,6 +14,12 @@ export const extendedPlayerSchema = z.object({
 
 export const arrayOfPlayersSchema = z.array(extendedPlayerSchema);
 
+export const searchParamSchema = z.object({
+  sort: z.enum(['firstname', 'lastname', 'birthday']),
+  direction: z.enum(['asc', 'desc']),
+});
+
 export type PlayerType = z.infer<typeof playerSchema>;
 
 export type ExtendedPlayer = z.infer<typeof extendedPlayerSchema>;
+
