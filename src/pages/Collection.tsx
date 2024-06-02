@@ -1,45 +1,35 @@
-import React, { useState } from 'react';
-import { StyledCard, StyledImageContainer } from '../components/styles/Card.styled';
-import Loader from '../components/ui/Loader';
+import React from 'react';
+import Card from '../components/Card';
+import NotificationWrapper from '../components/ui/NotificationWrapper';
+import Notification from '../components/ui/Notification';
+import { useFetchCollection } from '../lib/hooks/useFetchCollection';
 import { calculateBirthday } from '../lib/utils';
-import { fetchCollection } from '../lib/collection';
 
 export const Collection: React.FC = () => {
-  const collection = fetchCollection();
-  const card = collection[0];
+  const { collectionData, isLoading, errorMessage } = useFetchCollection(`${process.env.REACT_APP_API}/cards`);
+  const card = collectionData?.[0];
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  if (isLoading)
+    return (
+      <NotificationWrapper>
+        <Notification message="Loading..." />
+      </NotificationWrapper>
+    );
 
-  const handleImageLoading = () => {
-    setIsLoading(true);
-  };
-
-  const handleImageError = () => {
-    setIsError(true);
-  };
+  if (errorMessage)
+    return (
+      <NotificationWrapper>
+        <Notification message={errorMessage} />
+      </NotificationWrapper>
+    );
 
   return (
-    <>
-      {!isError && (
-        <StyledCard>
-          <StyledImageContainer>
-            {!isLoading && <Loader />}
-            <img
-              src={`${process.env.REACT_APP_IMAGE_RESOURCES}/image_resources/playerimages/${card.id}.png`}
-              alt={`${card.player.firstname} ${card.player.lastname}`}
-              width="100%"
-              height="100%"
-              loading="lazy"
-              onLoad={handleImageLoading}
-              onError={handleImageError}
-            />
-          </StyledImageContainer>
-          <p>{calculateBirthday(card.player.birthday)}</p>
-          <p>{`${card.player.firstname} ${card.player.lastname}`}</p>
-        </StyledCard>
-      )}
-    </>
+    <Card
+      birthday={calculateBirthday(card?.player.birthday) || ''}
+      firstname={card?.player.firstname || ''}
+      lastname={card?.player.lastname || ''}
+      image={`${process.env.REACT_APP_IMAGE_RESOURCES}/image_resources/playerimages/${card?.id}.png` || ''}
+    />
   );
 };
 
