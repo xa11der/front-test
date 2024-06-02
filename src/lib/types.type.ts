@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
 export const playerSchema = z.object({
-  firstname: z.string(),
-  lastname: z.string(),
-  birthday: z.string(),
-  image: z.string().url(),
+  firstname: z.string().min(2, 'Please enter valid First Name'),
+  lastname: z.string().min(2, 'Please enter valid Last Name'),
+  birthday: z.string().min(10, 'Please enter valid date'),
+  image: z.string().url('Please enter valid url to image'),
 });
 
 export const extendedPlayerSchema = z.object({
